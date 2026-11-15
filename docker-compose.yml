@@ -1,0 +1,20 @@
+services:
+  db:
+    image: postgres:15
+    container_name: safelife_db
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: mayarnayar
+      POSTGRES_DB: safelife
+    ports:
+      - "5432:5432"
+
+  backend:
+    build: ./backend
+    container_name: safelife_backend
+    ports:
+      - "8000:8000"
+    environment:
+      - DATABASE_URL=postgresql://postgres:mysecretpassword@db:5432/safelife
+    depends_on:
+      - db
